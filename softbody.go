@@ -14,3 +14,8 @@ type Spring struct {
 	restlen       float64
 	dampingFactor float64
 }
+
+func (p Particle) update(dt float64) {
+	p.velocity = p.velocity.addv(p.force.dividef(p.mass).multiplyf(dt))
+	p.pos = p.pos.addv(p.velocity.multiplyf(dt))
+}
