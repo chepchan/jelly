@@ -22,7 +22,7 @@ type Spring struct {
 }
 
 func (p *Particle) draw(screen *ebiten.Image) {
-	ebitenutil.DrawCircle(screen, p.pos.x, p.pos.y, 5, color.RGBA{255, 0, 0, 255})
+	ebitenutil.DrawCircle(screen, p.pos.x, p.pos.y, 5, color.RGBA{204, 156, 255, 255})
 }
 
 func (p *Particle) update(dt float64) {

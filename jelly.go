@@ -2,14 +2,16 @@ package main
 
 import (
 	"log"
+	"math"
 	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type Game struct {
-	prevTime     int64
-	testParticle Particle
+	prevTime          int64
+	particles         []*Particle
+	numberOfParticles int
 }
 
 func (g *Game) Update() error {
@@ -23,29 +25,39 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	dtMs := now - g.prevTime
 	// Delta time in seconds
 	dt := (float64(dtMs) / 1000.0)
-	numberOfParticles := 12
 
-	var particles []*Particle = make([]*Particle, numberOfParticles)
-
-	for i := range particles {
-		particles[i] = new(Particle)
+	for i := 0; i < g.numberOfParticles; i++ {
+		g.particles[i].draw(screen)
+		g.particles[i].update(dt)
 	}
-
-	g.testParticle.draw(screen)
-	g.testParticle.update(dt)
 
 	g.prevTime = now
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-	return 320, 240
+	return 1400, 950
 }
 
 func main() {
-	ebiten.SetWindowSize(640, 480)
+	numberOfParticles := 12
+	var particles []*Particle = make([]*Particle, numberOfParticles)
+
+	tau := 6.28
+	step := tau / float64(numberOfParticles)
+	radius := 100.0
+	center := Vector{300.0, 150.0}
+
+	for i := 0; i < numberOfParticles; i++ {
+		angle := step * float64(i)
+		x := center.x + radius*math.Cos(angle)
+		y := center.y + radius*math.Sin(angle)
+		particles[i] = &Particle{pos: Vector{x, y}, force: Vector{0.0, 9.8}, velocity: Vector{0.0, 0.0}, mass: 0.1}
+	}
+
+	ebiten.SetWindowSize(1400, 950)
 	ebiten.SetWindowTitle("Jelly :3")
 
-	game := Game{testParticle: Particle{force: Vector{0, 9.8}, mass: 1, pos: Vector{160, 0}}, prevTime: time.Now().UnixMilli()}
+	game := Game{particles: particles, prevTime: time.Now().UnixMilli(), numberOfParticles: numberOfParticles}
 
 	if err := ebiten.RunGame(&game); err != nil {
 		log.Fatal(err)
