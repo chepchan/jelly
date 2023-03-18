@@ -23,8 +23,16 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	dtMs := now - g.prevTime
 	// Delta time in seconds
 	dt := (float64(dtMs) / 1000.0)
+	numberOfParticles := 12
 
-	g.testParticle.update(screen, dt)
+	var particles []*Particle = make([]*Particle, numberOfParticles)
+
+	for i := range particles {
+		particles[i] = new(Particle)
+	}
+
+	g.testParticle.draw(screen)
+	g.testParticle.update(dt)
 
 	g.prevTime = now
 }
