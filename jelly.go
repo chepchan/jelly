@@ -28,12 +28,16 @@ func (g *Game) Draw(screen *ebiten.Image) {
 
 	for i := 0; i < g.numberOfParticles-1; i++ {
 		g.particles[i].draw(screen)
-		g.particles[i].update(dt)
 		g.particles[i].connect(screen, &g.particles[i].pos, &g.particles[i+1].pos)
+		if g.particles[i].collide(screen) {
+			g.particles[i].update(dt)
+		}
 	}
 	g.particles[g.numberOfParticles-1].draw(screen)
 	g.particles[0].connect(screen, &g.particles[g.numberOfParticles-1].pos, &g.particles[0].pos)
-	g.particles[g.numberOfParticles-1].update(dt)
+	if g.particles[g.numberOfParticles-1].collide(screen) {
+		g.particles[g.numberOfParticles-1].update(dt)
+	}
 
 	g.prevTime = now
 }
