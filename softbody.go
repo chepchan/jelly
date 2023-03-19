@@ -22,10 +22,14 @@ type Spring struct {
 }
 
 func (p *Particle) draw(screen *ebiten.Image) {
-	ebitenutil.DrawCircle(screen, p.pos.x, p.pos.y, 5, color.RGBA{204, 156, 255, 255})
+	ebitenutil.DrawCircle(screen, p.pos.x, p.pos.y, 3, color.RGBA{204, 156, 255, 255})
 }
 
 func (p *Particle) update(dt float64) {
 	p.velocity = p.velocity.addv(p.force.dividef(p.mass).multiplyf(dt))
 	p.pos = p.pos.addv(p.velocity.multiplyf(dt))
+}
+
+func (p *Particle) connect(screen *ebiten.Image, pos_1 *Vector, pos_2 *Vector) {
+	ebitenutil.DrawLine(screen, pos_1.x, pos_1.y, pos_2.x, pos_2.y, color.RGBA{204, 156, 255, 255})
 }
