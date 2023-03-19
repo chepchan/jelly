@@ -50,8 +50,7 @@ func main() {
 	numberOfParticles := 12
 	var particles []*Particle = make([]*Particle, numberOfParticles)
 
-	tau := 6.28
-	step := tau / float64(numberOfParticles)
+	step := (math.Pi * 2.) / float64(numberOfParticles)
 	radius := 100.0
 	center := Vector{300.0, 150.0}
 
