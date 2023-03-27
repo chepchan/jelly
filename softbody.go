@@ -14,8 +14,8 @@ type Particle struct {
 	mass     float64
 }
 type Spring struct {
-	A             Particle
-	B             Particle
+	A             *Particle
+	B             *Particle
 	stiffness     float64
 	restlen       float64
 	dampingFactor float64
