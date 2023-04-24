@@ -50,7 +50,7 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeigh
 func main() {
 	numberOfParticles := 12
 	var particles []*Particle = make([]*Particle, numberOfParticles)
-	var springs []*Spring = make([]*Spring, numberOfParticles)
+	// var springs []*Spring = make([]*Spring, numberOfParticles)
 
 	step := (math.Pi * 2.) / float64(numberOfParticles)
 	radius := 100.0
